@@ -12,7 +12,7 @@ int main(){
     for(i=0;i<strlen(ptr);i++){
         printf("%c",ptr[i] | 127);
     }
-    printf("\n XOR result:\n");
+    printf("\nXOR result:\n");
     for(i=0;i<strlen(ptr);i++){
         printf("%c",ptr[i] ^ 127);
     }

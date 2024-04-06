@@ -21,9 +21,7 @@ public class HillCipher {
         for (int i = 0; i < 3; i++) {
             System.out.print((char) (res[i][0] % 26 + 97));
         }
-        for (
-
-                int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
             for (int j = 0; j < 1; j++)
                 for (int k = 0; k < 3; k++) {
                     decrypt[i][j] = decrypt[i][j] + b[i][k] * res[k][j];

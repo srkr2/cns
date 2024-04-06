@@ -4,8 +4,8 @@
 int main(){
     char plain[100],cipher[100],ch;
     int i = 0,j;
-    char pt[26] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-    char ct[26] = {'F','Y','X','W','V','U','Q','S','R','T','P','O','I','M','L','K','J','N','H','G','Z','E','D','C','B','A'};
+    char pt[26] = "abcdefghijklmnopqrstuvwxyz";
+    char ct[26] = "utsrqpzyxwvonmlkjihgfedcba";
     printf("enter plain text: ");
     scanf("%s",plain);
     while(plain[i] != '\0'){

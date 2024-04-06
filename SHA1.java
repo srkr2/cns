@@ -13,11 +13,11 @@ public class SHA1 {
 
         // Convert message digest into hex value
         String sha1 = no.toString(16);
-
-        // Pad with 0s to ensure the hash has 40 digits
-        // while (sha1.length() < 40) {
-        //     sha1 = "0" + sha1;
-        // }
+        
+        //Pad with 0s to ensure the hash has 40 digits
+        while (sha1.length() < 40) {
+            sha1 = "0" + sha1;
+        }
 
         System.out.println("SHA1 hash of text: " + sha1);
     }
