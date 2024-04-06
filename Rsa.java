@@ -2,7 +2,7 @@ import java.math.*;
 import java.util.Random;
 import java.util.Scanner;
 
-public class RSA {
+public class Rsa {
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -22,23 +22,17 @@ public class RSA {
         BigInteger message = new BigInteger(plainText);
         BigInteger encrypted = message.modPow(e, n);
         BigInteger decrypted = encrypted.modPow(d, n);
-        System.out.println("encrypted: "+ encrypted );
+        System.out.println("encrypted: " + encrypted);
 
-        System.out.println("decrypted: "+ decrypted );
+        System.out.println("decrypted: " + decrypted);
     }
 
     public static BigInteger generateE(BigInteger pi) {
-        int y, intGCD;
         BigInteger e;
-        BigInteger gcd;
-        Random x = new Random();
+        Random random = new Random();
         do {
-            y = x.nextInt(pi.intValue() - 1);
-            String z = Integer.toString(y);
-            e = new BigInteger(z);
-            gcd = pi.gcd(e);
-            intGCD = gcd.intValue();
-        } while (y <= 2 || intGCD != 1);
+            e = new BigInteger(pi.bitLength(), random);
+        } while (e.compareTo(pi) >= 0 || !e.gcd(pi).equals(BigInteger.ONE));
         return e;
     }
 }

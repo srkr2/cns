@@ -1,10 +1,13 @@
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.Scanner;
 
-public class SHA1 {
+public class Sha1 {
     public static void main(String[] args) throws Exception {
-        String text = "Hello, World!";
-
+        String text;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter text: ");
+        text = sc.nextLine();
         MessageDigest md = MessageDigest.getInstance("SHA-1");
         byte[] messageDigest = md.digest(text.getBytes());
 
