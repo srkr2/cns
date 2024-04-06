@@ -1,52 +1,53 @@
 import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.SecretKey;
+import javax.crypto.KeyGenerator;
 import java.util.Base64;
+import java.util.Scanner;
 
 public class Aes {
-    private static final String SECRET_KEY = "123456789abcdefg"; // must be 16 characters for AES
-    private static final String INIT_VECTOR = "RandomInitVector"; // 16 bytes IV
+    private static Cipher encryptCipher;
+    private static Cipher decryptCipher;
+    public static void main(String[] args) throws Exception {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter text to be encrypted: ");
+        String plainText = sc.nextLine();
 
-    public static void main(String[] args) {
-        String plainText = "hello";
+        // Generate AES key
+        SecretKey secretKey = generateAESKey();
+        setupEncryptor(secretKey);
 
         String encryptedString = encrypt(plainText);
         System.out.println("Encrypted: " + encryptedString);
 
         String decryptedString = decrypt(encryptedString);
         System.out.println("Decrypted: " + decryptedString);
+
+        sc.close();
     }
 
-    public static String encrypt(String value) {
-        try {
-            IvParameterSpec iv = new IvParameterSpec(INIT_VECTOR.getBytes("UTF-8"));
-            SecretKeySpec skeySpec = new SecretKeySpec(SECRET_KEY.getBytes("UTF-8"), "AES");
-
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
-
-            byte[] encrypted = cipher.doFinal(value.getBytes());
-            return Base64.getEncoder().encodeToString(encrypted);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return null;
+    public static SecretKey generateAESKey() throws Exception {
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        keyGen.init(128); // 128 bit key
+        return keyGen.generateKey();
     }
 
-    public static String decrypt(String encrypted) {
-        try {
-            IvParameterSpec iv = new IvParameterSpec(INIT_VECTOR.getBytes("UTF-8"));
-            SecretKeySpec skeySpec = new SecretKeySpec(SECRET_KEY.getBytes("UTF-8"), "AES");
+    public static void setupEncryptor(SecretKey secretKey) throws Exception {
+        encryptCipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        encryptCipher.init(Cipher.ENCRYPT_MODE, secretKey);
 
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
+        decryptCipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        decryptCipher.init(Cipher.DECRYPT_MODE, secretKey);
+    }
 
-            byte[] original = cipher.doFinal(Base64.getDecoder().decode(encrypted));
+    public static String encrypt(String str) throws Exception {
+        byte[] utf8 = str.getBytes("UTF8");
+        byte[] enc = encryptCipher.doFinal(utf8);
+        return Base64.getEncoder().encodeToString(enc);
+    }
 
-            return new String(original);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return null;
+    public static String decrypt(String str) throws Exception {
+        byte[] dec = Base64.getDecoder().decode(str);
+        byte[] utf8 = decryptCipher.doFinal(dec);
+        return new String(utf8, "UTF8");
     }
 }
