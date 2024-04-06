@@ -1,12 +1,11 @@
 import java.math.BigInteger;
 import java.util.Scanner;
 public class DiffieHellman {
-    public final static int pValue = 23;
-    public final static int aValue = 5;
+    
     public static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) throws Exception {
-        BigInteger p = new BigInteger(Integer.toString(pValue));
-        BigInteger a = new BigInteger(Integer.toString(aValue));
+        BigInteger p = BigInteger.valueOf(23);
+        BigInteger a = BigInteger.valueOf(5);
         System.out.println("enter private key of A: ");
         BigInteger Xa = sc.nextBigInteger();
         System.out.println("enter private key of B: ");
