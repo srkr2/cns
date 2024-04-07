@@ -1,17 +1,19 @@
 #include<stdio.h>
 #include<string.h>
+#include<ctype.h>
+
 void encrypt(char plain[],int key){
     int i=0;
     while(plain[i] != '\0'){
         char ch = plain[i];
-        if(ch >='a' && ch <='z'){
+        if(islower(ch)){
             ch = ch + (key %26);
             if(ch > 'z')
             {
                 ch = ch -26;
             }
         }
-        else if(ch >='A' && ch <='Z'){
+        else if(isupper(ch)){
             ch = ch + (key %26);
             if(ch > 'Z')
             {
@@ -27,13 +29,13 @@ void decrypt(char encrypt[],int key){
     int i =0;
     while(encrypt[i] != '\0'){
         char ch = encrypt[i];
-        if(ch >= 'a' && ch<='z'){
+        if(islower(ch)){
             ch = ch - (key%26);
             if(ch <'a'){
                 ch = ch + 26;
             }
         }
-        else if(ch >= 'A' && ch<='Z'){
+        else if(isupper(ch)){
             ch = ch - (key%26);
             if(ch <'A'){
                 ch = ch + 26;

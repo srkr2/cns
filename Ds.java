@@ -11,19 +11,19 @@ public class Ds {
         PrivateKey priv = pair.getPrivate();
         PublicKey pub = pair.getPublic();
 
-        // Sign some data
-        Signature dsa = Signature.getInstance("SHA1withDSA");
-        dsa.initSign(priv);
-
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the text to sign: ");
         String str = scanner.nextLine();
         byte[] strByte = str.getBytes("UTF8");
+        
+        // Sign the data
+        Signature dsa = Signature.getInstance("SHA1withDSA");
+        dsa.initSign(priv);
         dsa.update(strByte);
         byte[] realSig = dsa.sign();
+        System.out.println("The signature is: "+realSig.toString());
 
         // receivers side
-
         System.out.println("enter received messsage: ");
         String rcv = scanner.nextLine();
 
